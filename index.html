@@ -6,7 +6,7 @@
   <title>NoSugar — Track sugar, feel better</title>
   <meta name="description" content="NoSugar helps you log added sugar quickly, understand your daily target, and build healthier habits." />
   <meta property="og:title" content="NoSugar — Track sugar, feel better" />
-  <meta property="og:description" content="Log added sugar quickly, understand your daily target, and build healthier habits." />
+  <meta property="og:description" content="Log added sugar quickly, understand your daily target, and stay on target." />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#16a34a" />
   <style>
@@ -16,20 +16,27 @@
       --muted: #64748b;
       --accent: #16a34a;
       --accent-2: #22c55e;
+      --card: #ffffff;
+      --border: #e2e8f0;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
       margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
       background: var(--bg); color: var(--text); overflow-x: hidden;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     }
     #bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+
     header {
-      padding: 20px clamp(16px, 4vw, 40px);
+      padding: 16px clamp(16px, 4vw, 40px);
       display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; background: rgba(255,255,255,.6); backdrop-filter: blur(8px);
+      position: sticky; top: 0; background: rgba(255,255,255,.7); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
     }
-    .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 22px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight: 800; letter-spacing: -0.02em; font-size: 22px; }
+    .brand img { width: 28px; height: 28px; border-radius: 8px; object-fit: cover; }
     nav a { color: var(--text); text-decoration: none; margin-left: 20px; font-weight: 600; }
     nav a:hover { color: var(--accent); }
 
@@ -37,7 +44,7 @@
 
     .hero {
       display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px, 5vw, 48px);
-      align-items: center; padding: clamp(32px, 6vw, 72px) 0 24px;
+      align-items: center; padding: clamp(24px, 6vw, 72px) 0 24px;
     }
     .hero h1 {
       font-size: clamp(32px, 6vw, 56px); line-height: 1.05; margin: 0 0 16px;
@@ -51,7 +58,7 @@
       box-shadow: 0 10px 20px rgba(22,163,74,.18), inset 0 -2px 0 rgba(0,0,0,.06);
     }
     .btn:hover { background: #15803d; }
-    .btn.secondary { background: transparent; color: var(--text); border: 2px solid #e2e8f0; box-shadow: none; }
+    .btn.secondary { background: transparent; color: var(--text); border: 2px solid var(--border); box-shadow: none; }
     .meta { margin-top: 10px; color: var(--muted); font-size: 14px; }
 
     .phone-wrap { position: relative; display: grid; place-items: center; }
@@ -60,38 +67,58 @@
       border-radius: 40px; background: #0b1220; padding: 14px; position: relative;
       box-shadow: 0 30px 80px rgba(2,6,23,.35), inset 0 0 0 1px rgba(148,163,184,.2);
     }
-    .screen { position: absolute; inset: 14px; border-radius: 28px; background: #fff; display: grid; grid-template-rows: 48px 1fr; }
+    .screen { position: absolute; inset: 14px; border-radius: 28px; background: #fff; display: grid; grid-template-rows: 48px 1fr; overflow: hidden; }
     .status { height: 48px; display: flex; align-items: center; padding: 0 16px; gap: 10px; border-bottom: 1px solid #f1f5f9; color: #475569; font-weight: 700; }
     .ui { padding: 16px; display: grid; gap: 12px; }
     .chip { background: #ecfeff; color: #0e7490; padding: 8px 10px; border-radius: 12px; font-weight: 700; width: max-content; }
-    .card { border: 1px solid #e2e8f0; border-radius: 16px; padding: 12px; }
+    .card { border: 1px solid var(--border); border-radius: 16px; padding: 12px; background: var(--card); }
     .gauge { height: 10px; background: #f1f5f9; border-radius: 999px; overflow: hidden; }
     .gauge > i { display:block; height:100%; width: 52%; background: linear-gradient(90deg,var(--accent), var(--accent-2)); }
 
     .callout { position: absolute; font-weight: 700; color: var(--text); }
-    .callout .label { background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 8px 10px; box-shadow: 0 8px 24px rgba(2,6,23,.06); }
+    .callout .label { background: #fff; border: 2px solid var(--border); border-radius: 12px; padding: 8px 10px; box-shadow: 0 8px 24px rgba(2,6,23,.06); }
     .callout svg { position: absolute; overflow: visible; }
 
-    .features { padding: 56px 0; }
-    .grid { display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0,1fr)); }
-    .feature { border: 1px solid #e2e8f0; border-radius: 16px; padding: 18px; background: #fff; }
+    .section { padding: 56px 0; }
+    .features .grid { display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .feature { border: 1px solid var(--border); border-radius: 16px; padding: 18px; background: #fff; }
     .feature h3 { margin: 0 0 6px; font-size: 18px; }
     .feature p { margin: 0; color: var(--muted); font-size: 15px; }
 
+    .how { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+    .step { border: 1px solid var(--border); border-radius: 16px; padding: 18px; background: #fff; }
+    .step h4 { margin:0 0 6px; }
+    .reason { border:1px dashed var(--border); padding: 18px; border-radius: 14px; background:#fcfffd; }
+
+    .policies { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+    .linklike { background:transparent; border:0; color:#0ea5e9; font-weight:700; cursor:pointer; }
+
     footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; }
+
+    /* Modal */
+    dialog::backdrop { background: rgba(2,6,23,.4); backdrop-filter: blur(2px); }
+    dialog { border:1px solid var(--border); border-radius: 16px; padding:0; width:min(880px,92vw); }
+    .modal-head { display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid var(--border); font-weight:800; }
+    .modal-body { padding:18px; max-height: min(70vh, 720px); overflow:auto; color:#0f172a; }
+    .modal-body h3 { margin: 18px 0 6px; }
+    .x { appearance:none; border:0; background:#0f172a; color:white; border-radius:10px; padding:8px 10px; font-weight:800; cursor:pointer; }
 
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: 1fr; }
+      .features .grid { grid-template-columns: 1fr; }
+      .how { grid-template-columns: 1fr; }
       header { position: static; }
     }
   </style>
 </head>
 <body>
-  <canvas id="bg"></canvas>
+  <canvas id="bg" aria-hidden="true"></canvas>
 
   <header class="container" aria-label="Top">
-    <div class="brand">nosugar</div>
+    <div class="brand">
+      <img src="logo.png" alt="" onerror="this.style.display='none'"/>
+      <span>nosugar</span>
+    </div>
     <nav>
       <a href="#features">Features</a>
       <a href="#how">How it works</a>
@@ -106,43 +133,55 @@
         <h1>Track added sugar.<br/>Feel better.</h1>
         <p class="lead">A lightning‑fast way to log sugar in anything you eat, see your daily limit, and stay on target.</p>
         <div class="cta">
-          <a class="btn" href="#" id="ctaPrimary">Join the beta</a>
-          <a class="btn secondary" href="#features">Learn more</a>
+          <a class="btn" href="https://testflight.apple.com/join/ySZHTZT7" rel="noopener">Join the TestFlight</a>
+          <button class="btn secondary" id="ctaLearn">Read Privacy</button>
         </div>
-        <div class="meta">iOS first. Android coming later.</div>
+        <div class="meta">iOS first. Android later.</div>
+        <div class="policies">
+          <button class="linklike" data-modal="pp">Privacy Policy</button>
+          <button class="linklike" data-modal="terms">Terms</button>
+          <button class="linklike" data-modal="eula">EULA</button>
+          <button class="linklike" data-modal="data">Data & Deletion</button>
+          <button class="linklike" data-modal="support">Support</button>
+        </div>
       </div>
 
       <div class="phone-wrap" aria-hidden="true">
         <div class="phone">
           <div class="screen">
             <div class="status">NoSugar · Today</div>
-            <div class="ui">
-              <div class="chip">Goal: 36 g</div>
+
+            <!-- If you add app-ui.png to the repo root, we swap it in automatically -->
+            <img id="appUI" alt="App UI" style="display:none; width:100%; height:100%; object-fit:cover;">
+
+            <div class="ui" id="demoUI">
+              <div class="chip">Goal: 15 g</div>
               <div class="card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                  <strong>22 g</strong><span style="color:#94a3b8; font-weight:700;">remaining</span>
+                  <strong>7 g</strong><span style="color:#94a3b8; font-weight:700;">remaining</span>
                 </div>
-                <div class="gauge"><i style="width:42%"></i></div>
+                <div class="gauge"><i style="width:53%"></i></div>
               </div>
               <div class="card">
                 <div style="display:flex; gap:10px; align-items:center;">
                   <div style="width:36px;height:36px;border-radius:10px;background:#f0f9ff;"></div>
                   <div style="flex:1;">
-                    <div style="font-weight:800;">Greek Yogurt</div>
-                    <div style="color:#64748b;font-size:13px;">12 g added sugar</div>
+                    <div style="font-weight:800;">Latte</div>
+                    <div style="color:#64748b;font-size:13px;">5 g added sugar</div>
                   </div>
                   <button class="btn" style="padding:8px 12px;border-radius:10px;">+ Add</button>
                 </div>
               </div>
               <div class="card">
                 <div style="display:grid;grid-template-columns:1fr auto;gap:8px; align-items:center;">
-                  <input placeholder="Add item…" style="height:40px;border-radius:10px;border:1px solid #e2e8f0;padding:0 10px;outline-color: var(--accent);">
+                  <input placeholder="Enter your daily added sugar…" style="height:40px;border-radius:10px;border:1px solid var(--border);padding:0 10px;outline-color: var(--accent);">
                   <button class="btn" style="height:40px;border-radius:10px;">Log</button>
                 </div>
               </div>
             </div>
           </div>
 
+          <!-- Callouts -->
           <div class="callout" style="left:-20px; top:40px;">
             <div class="label">Daily limit</div>
             <svg width="120" height="80">
@@ -170,7 +209,8 @@
       </div>
     </section>
 
-    <section id="features" class="features">
+    <section id="features" class="section features">
+      <h2>Features</h2>
       <div class="grid">
         <div class="feature">
           <h3>Instant logging</h3>
@@ -178,27 +218,63 @@
         </div>
         <div class="feature">
           <h3>Personalized limit</h3>
-          <p>We estimate a daily target from age, sex, and activity — grounded in health guidance.</p>
+          <p>We estimate a daily target from age, sex, and activity — grounded in public health guidance.</p>
         </div>
         <div class="feature">
           <h3>Simple insights</h3>
           <p>See weekly trends, low‑sugar swaps, and the days you consistently hit your goal.</p>
         </div>
+        <div class="feature">
+          <h3>Data ownership</h3>
+          <p>Export your data anytime. Delete your account from the app in seconds.</p>
+        </div>
+        <div class="feature">
+          <h3>Works offline</h3>
+          <p>Log entries even without a connection; they’ll sync once you’re back online.</p>
+        </div>
+        <div class="feature">
+          <h3>Private by design</h3>
+          <p>We only store what’s needed to provide the service. No ads. No selling data.</p>
+        </div>
       </div>
     </section>
 
-    <section id="privacy" class="features">
-      <div class="feature">
-        <h3>Privacy‑first</h3>
-        <p>We keep your data private and never sell it. Sign in securely and export your data any time.</p>
+    <section id="how" class="section">
+      <h2>How it works</h2>
+      <div class="how">
+        <div class="step">
+          <h4>1) Estimate your limit</h4>
+          <p>During onboarding, we calculate a personal daily limit (in grams) to keep you within recommended intake.</p>
+        </div>
+        <div class="step">
+          <h4>2) Log with a single number</h4>
+          <p>Enter just the grams of <em>added sugar</em> for each item. The app keeps a running total for the day.</p>
+        </div>
+        <div class="step">
+          <h4>3) See progress at a glance</h4>
+          <p>A simple ring shows remaining grams, with weekly views that highlight patterns and wins.</p>
+        </div>
+      </div>
+      <div class="reason" style="margin-top:14px;">
+        <strong>Why a single‑number app?</strong> Because it reduces friction. When logging is fast, people actually do it. Fewer taps → more consistency → better results.
       </div>
     </section>
 
-    <section id="contact" class="features">
-      <div class="feature">
-        <h3>Get in touch</h3>
-        <p>Questions or press? <a href="mailto:hello@nosugarapp.com">hello@nosugarapp.com</a></p>
+    <section id="privacy" class="section">
+      <h2>Privacy & Policies</h2>
+      <p>We keep your data private and never sell it. Read the full documents below.</p>
+      <div class="policies">
+        <button class="btn secondary" data-modal="pp">Privacy Policy</button>
+        <button class="btn secondary" data-modal="terms">Terms of Use</button>
+        <button class="btn secondary" data-modal="eula">EULA</button>
+        <button class="btn secondary" data-modal="data">Data & Deletion</button>
+        <button class="btn secondary" data-modal="support">Support</button>
       </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <p>Questions or press? <a href="mailto:hello@nosugarapp.com">hello@nosugarapp.com</a></p>
     </section>
   </main>
 
@@ -206,8 +282,67 @@
     © <span id="y"></span> NoSugar. All rights reserved.
   </footer>
 
+  <!-- Modals -->
+  <dialog id="pp">
+    <div class="modal-head"><span>Privacy Policy</span><button class="x" data-close>Close</button></div>
+    <div class="modal-body">
+      <p><strong>Summary.</strong> We collect the minimum data needed to run NoSugar: account info (email), app settings, and your entries. We do not sell or share your personal data with advertisers.</p>
+      <h3>Data we process</h3>
+      <ul>
+        <li>Account: email, sign‑in metadata.</li>
+        <li>Profile: age range, sex, height/weight (optional), activity level.</li>
+        <li>Logs: your added‑sugar entries and timestamps.</li>
+        <li>Diagnostics: basic analytics and crash reports to improve reliability.</li>
+      </ul>
+      <h3>Your choices</h3>
+      <ul>
+        <li>Export all data from the app.</li>
+        <li>Delete your account and data at any time.</li>
+      </ul>
+      <p>For questions contact <a href="mailto:privacy@nosugarapp.com">privacy@nosugarapp.com</a>.</p>
+    </div>
+  </dialog>
+
+  <dialog id="terms">
+    <div class="modal-head"><span>Terms of Use</span><button class="x" data-close>Close</button></div>
+    <div class="modal-body">
+      <p>NoSugar is for informational purposes and is not a medical device. Do not rely on it for diagnosis or treatment. You must be 13+ to use the service.</p>
+      <h3>License</h3>
+      <p>You may use the app for personal, non‑commercial purposes. Do not decompile, redistribute, or misuse the service.</p>
+      <h3>Liability</h3>
+      <p>To the fullest extent permitted by law, NoSugar is provided “as is” without warranties. We’re not liable for indirect or consequential damages.</p>
+    </div>
+  </dialog>
+
+  <dialog id="eula">
+    <div class="modal-head"><span>End User License Agreement (EULA)</span><button class="x" data-close>Close</button></div>
+    <div class="modal-body">
+      <p>This EULA governs your use of the iOS app downloaded from the Apple App Store or TestFlight. Apple is not responsible for support or claims. You acknowledge Apple’s EULA terms also apply.</p>
+      <p>By installing or using, you accept this EULA.</p>
+    </div>
+  </dialog>
+
+  <dialog id="data">
+    <div class="modal-head"><span>Data & Deletion</span><button class="x" data-close>Close</button></div>
+    <div class="modal-body">
+      <p>You can export or delete your data from within the app (Settings → Data). Deleting is permanent and removes your account, logs, and profile. Backups are purged on a rolling basis.</p>
+      <p>We retain minimal server logs for security (up to 30 days).</p>
+    </div>
+  </dialog>
+
+  <dialog id="support">
+    <div class="modal-head"><span>Support</span><button class="x" data-close>Close</button></div>
+    <div class="modal-body">
+      <p>Email <a href="mailto:support@nosugarapp.com">support@nosugarapp.com</a> and include your device model, iOS version, and steps to reproduce any issue.</p>
+      <p>For account or data requests, contact <a href="mailto:privacy@nosugarapp.com">privacy@nosugarapp.com</a>.</p>
+    </div>
+  </dialog>
+
   <script>
+    // Year
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Animated "sugar molecules" background
     const canvas = document.getElementById('bg');
     const ctx = canvas.getContext('2d');
     let dpr = Math.max(1, window.devicePixelRatio || 1);
@@ -265,6 +400,32 @@
       requestAnimationFrame(tick);
     }
     tick();
+
+    // App UI swap: if app-ui.png exists, show it inside the phone mock
+    (function(){
+      const img = document.getElementById('appUI');
+      const demo = document.getElementById('demoUI');
+      const test = new Image();
+      test.onload = () => {
+        img.src = 'app-ui.png';
+        img.style.display = 'block';
+        demo.style.display = 'none';
+      };
+      test.onerror = () => { /* keep demo */ };
+      test.src = 'app-ui.png';
+    })();
+
+    // Modals
+    const openers = document.querySelectorAll('[data-modal]');
+    openers.forEach(btn => btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-modal');
+      const dlg = document.getElementById(id);
+      if (dlg) dlg.showModal();
+    }));
+    document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', e => {
+      const dialog = e.target.closest('dialog'); dialog?.close();
+    }));
+    document.getElementById('ctaLearn').addEventListener('click', ()=> document.getElementById('pp').showModal());
   </script>
 </body>
 </html>
