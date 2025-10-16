@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NoSugar — Track sugar, feel better</title>
+  <meta name="description" content="NoSugar helps you log added sugar quickly, understand your daily target, and build healthier habits." />
+  <meta property="og:title" content="NoSugar — Track sugar, feel better" />
+  <meta property="og:description" content="Log added sugar quickly, understand your daily target, and build healthier habits." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#16a34a" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #16a34a;
+      --accent-2: #22c55e;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+      background: var(--bg); color: var(--text); overflow-x: hidden;
+    }
+    #bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+    header {
+      padding: 20px clamp(16px, 4vw, 40px);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; background: rgba(255,255,255,.6); backdrop-filter: blur(8px);
+    }
+    .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 22px; }
+    nav a { color: var(--text); text-decoration: none; margin-left: 20px; font-weight: 600; }
+    nav a:hover { color: var(--accent); }
+
+    .container { width: min(1100px, 92vw); margin-inline: auto; }
+
+    .hero {
+      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px, 5vw, 48px);
+      align-items: center; padding: clamp(32px, 6vw, 72px) 0 24px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 56px); line-height: 1.05; margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+    .lead { font-size: clamp(16px, 2.4vw, 20px); color: var(--muted); margin: 0 0 24px; }
+    .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      appearance: none; border: 0; background: var(--accent); color: white; font-weight: 700;
+      padding: 14px 18px; border-radius: 14px; cursor: pointer; font-size: 16px;
+      box-shadow: 0 10px 20px rgba(22,163,74,.18), inset 0 -2px 0 rgba(0,0,0,.06);
+    }
+    .btn:hover { background: #15803d; }
+    .btn.secondary { background: transparent; color: var(--text); border: 2px solid #e2e8f0; box-shadow: none; }
+    .meta { margin-top: 10px; color: var(--muted); font-size: 14px; }
+
+    .phone-wrap { position: relative; display: grid; place-items: center; }
+    .phone {
+      width: min(360px, 80vw); height: calc(min(360px, 80vw) * 2);
+      border-radius: 40px; background: #0b1220; padding: 14px; position: relative;
+      box-shadow: 0 30px 80px rgba(2,6,23,.35), inset 0 0 0 1px rgba(148,163,184,.2);
+    }
+    .screen { position: absolute; inset: 14px; border-radius: 28px; background: #fff; display: grid; grid-template-rows: 48px 1fr; }
+    .status { height: 48px; display: flex; align-items: center; padding: 0 16px; gap: 10px; border-bottom: 1px solid #f1f5f9; color: #475569; font-weight: 700; }
+    .ui { padding: 16px; display: grid; gap: 12px; }
+    .chip { background: #ecfeff; color: #0e7490; padding: 8px 10px; border-radius: 12px; font-weight: 700; width: max-content; }
+    .card { border: 1px solid #e2e8f0; border-radius: 16px; padding: 12px; }
+    .gauge { height: 10px; background: #f1f5f9; border-radius: 999px; overflow: hidden; }
+    .gauge > i { display:block; height:100%; width: 52%; background: linear-gradient(90deg,var(--accent), var(--accent-2)); }
+
+    .callout { position: absolute; font-weight: 700; color: var(--text); }
+    .callout .label { background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 8px 10px; box-shadow: 0 8px 24px rgba(2,6,23,.06); }
+    .callout svg { position: absolute; overflow: visible; }
+
+    .features { padding: 56px 0; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .feature { border: 1px solid #e2e8f0; border-radius: 16px; padding: 18px; background: #fff; }
+    .feature h3 { margin: 0 0 6px; font-size: 18px; }
+    .feature p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      header { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <header class="container" aria-label="Top">
+    <div class="brand">nosugar</div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero" aria-label="Hero">
+      <div>
+        <h1>Track added sugar.<br/>Feel better.</h1>
+        <p class="lead">A lightning‑fast way to log sugar in anything you eat, see your daily limit, and stay on target.</p>
+        <div class="cta">
+          <a class="btn" href="#" id="ctaPrimary">Join the beta</a>
+          <a class="btn secondary" href="#features">Learn more</a>
+        </div>
+        <div class="meta">iOS first. Android coming later.</div>
+      </div>
+
+      <div class="phone-wrap" aria-hidden="true">
+        <div class="phone">
+          <div class="screen">
+            <div class="status">NoSugar · Today</div>
+            <div class="ui">
+              <div class="chip">Goal: 36 g</div>
+              <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <strong>22 g</strong><span style="color:#94a3b8; font-weight:700;">remaining</span>
+                </div>
+                <div class="gauge"><i style="width:42%"></i></div>
+              </div>
+              <div class="card">
+                <div style="display:flex; gap:10px; align-items:center;">
+                  <div style="width:36px;height:36px;border-radius:10px;background:#f0f9ff;"></div>
+                  <div style="flex:1;">
+                    <div style="font-weight:800;">Greek Yogurt</div>
+                    <div style="color:#64748b;font-size:13px;">12 g added sugar</div>
+                  </div>
+                  <button class="btn" style="padding:8px 12px;border-radius:10px;">+ Add</button>
+                </div>
+              </div>
+              <div class="card">
+                <div style="display:grid;grid-template-columns:1fr auto;gap:8px; align-items:center;">
+                  <input placeholder="Add item…" style="height:40px;border-radius:10px;border:1px solid #e2e8f0;padding:0 10px;outline-color: var(--accent);">
+                  <button class="btn" style="height:40px;border-radius:10px;">Log</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout" style="left:-20px; top:40px;">
+            <div class="label">Daily limit</div>
+            <svg width="120" height="80">
+              <defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="currentColor"/></marker></defs>
+              <path d="M110,70 C70,70 40,40 10,30" stroke="currentColor" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            </svg>
+          </div>
+
+          <div class="callout" style="right:-10px; top:180px;">
+            <div class="label">Today’s progress</div>
+            <svg width="120" height="100">
+              <defs><marker id="arrow2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="currentColor"/></marker></defs>
+              <path d="M10,90 C40,40 80,30 110,20" stroke="currentColor" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+            </svg>
+          </div>
+
+          <div class="callout" style="left:-14px; bottom:80px;">
+            <div class="label">Fast add</div>
+            <svg width="120" height="100">
+              <defs><marker id="arrow3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="currentColor"/></marker></defs>
+              <path d="M110,10 C70,30 40,60 10,80" stroke="currentColor" stroke-width="2" fill="none" marker-end="url(#arrow3)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <div class="grid">
+        <div class="feature">
+          <h3>Instant logging</h3>
+          <p>Type any food or drink and save with one tap. No fiddly nutrition labels required.</p>
+        </div>
+        <div class="feature">
+          <h3>Personalized limit</h3>
+          <p>We estimate a daily target from age, sex, and activity — grounded in health guidance.</p>
+        </div>
+        <div class="feature">
+          <h3>Simple insights</h3>
+          <p>See weekly trends, low‑sugar swaps, and the days you consistently hit your goal.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy" class="features">
+      <div class="feature">
+        <h3>Privacy‑first</h3>
+        <p>We keep your data private and never sell it. Sign in securely and export your data any time.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="features">
+      <div class="feature">
+        <h3>Get in touch</h3>
+        <p>Questions or press? <a href="mailto:hello@nosugarapp.com">hello@nosugarapp.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    © <span id="y"></span> NoSugar. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let dpr = Math.max(1, window.devicePixelRatio || 1);
+    let W, H;
+    const molecules = [];
+    const HEX = 6;
+    function rnd(a,b){ return Math.random()*(b-a)+a; }
+    function resize(){
+      W = canvas.width = Math.floor(innerWidth * dpr);
+      H = canvas.height = Math.floor(innerHeight * dpr);
+      canvas.style.width = innerWidth + 'px';
+      canvas.style.height = innerHeight + 'px';
+    }
+    resize();
+    addEventListener('resize', resize, { passive: true });
+    function makeMolecule(){
+      const r = rnd(10, 22) * dpr;
+      const x = rnd(0, W);
+      const y = rnd(0, H);
+      const speed = rnd(0.08, 0.25) * dpr;
+      const drift = rnd(0.2, 0.6) * (Math.random() < 0.5 ? -1 : 1);
+      const rot = rnd(0, Math.PI*2);
+      const alpha = rnd(0.08, 0.18);
+      return { x, y, r, speed, drift, rot, alpha };
+    }
+    for(let i=0;i<38;i++) molecules.push(makeMolecule());
+    function hexPath(cx, cy, r, rot){
+      ctx.beginPath();
+      for(let k=0;k<HEX;k++){
+        const a = rot + (k/HEX)*Math.PI*2;
+        const px = cx + Math.cos(a)*r;
+        const py = cy + Math.sin(a)*r;
+        if(k===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+      }
+      ctx.closePath();
+    }
+    function tick(){
+      ctx.clearRect(0,0,W,H);
+      for(const m of molecules){
+        m.y -= m.speed;
+        m.x += m.drift * 0.2;
+        m.rot += 0.002;
+        if(m.y < -40*dpr) { Object.assign(m, makeMolecule(), { y: H + 40*dpr }); }
+        ctx.save();
+        ctx.globalAlpha = m.alpha;
+        ctx.lineWidth = 1.5 * dpr;
+        ctx.strokeStyle = '#10b981';
+        hexPath(m.x, m.y, m.r, m.rot);
+        ctx.stroke();
+        ctx.globalAlpha = m.alpha * 0.7;
+        hexPath(m.x, m.y, m.r*0.55, -m.rot*0.9);
+        ctx.stroke();
+        ctx.restore();
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/app",
+      "destination": "https://nosugar-web.vercel.app",
+      "permanent": false
+    },
+    {
+      "source": "/app/:path*",
+      "destination": "https://nosugar-web.vercel.app/:path*",
+      "permanent": false
+    }
+  ]
+}
