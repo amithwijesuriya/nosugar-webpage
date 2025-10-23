@@ -1,14 +1,66 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Support • nosugar</title>
-<style>:root{--fg:#0a0a0a;--muted:#5b5b5b;--bg:#fff;--brand:#12b886}*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--fg)}a{color:var(--brand)}.wrap{max-width:860px;margin:0 auto;padding:32px 20px 80px}header{padding:24px 0 8px;border-bottom:1px solid #eee;margin-bottom:28px;display:flex;gap:12px}header img{width:36px;height:36px}h1{font-size:28px;margin:6px 0 10px}h2{font-size:20px;margin:22px 0 8px}p,li{line-height:1.6}.muted{color:#5b5b5b;font-size:14px}footer{margin-top:40px;border-top:1px solid #eee;padding-top:18px}</style></head>
-<body><div class=wrap><header><img src="logo.png" alt="nosugar logo" onerror="this.style.display='none'"><div><div class=muted>nosugar</div><h1>Support</h1><div class=muted>Last updated: 2025-10-21</div></div></header>
-<p>Need help? We’re here.</p>
-<ul>
-  <li>Email: <a href="mailto:nosugarhelp@gmail.com">nosugarhelp@gmail.com</a></li>
-  <li>Bug reports &amp; feedback: inside the app or by email</li>
-  <li>Data questions: see <a href="/data-deletion.html">Data &amp; Deletion</a></li>
-</ul>
-<h2>FAQ</h2>
-<h3>How do I reset my password?</h3><p>Use “Forgot password” on the sign-in screen. Check spam if you don’t see the email.</p>
-<h3>How do I delete my account?</h3><p>Open the app → <em>Settings → Data &amp; Export → Delete account</em>, or email us from your account email.</p>
-<h3>How can I export my data?</h3><p>Open the app → <em>Settings → Data &amp; Export → Export</em> to download a CSV.</p>
-<footer class=muted>© 2025 nosugar • This page is for information only, not legal advice.</footer></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NoSugar – Support</title>
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    :root { --fg:#111827; --muted:#6b7280; --bg:#ffffff; --border:#e5e7eb; }
+    @media (prefers-color-scheme: dark) {
+      :root { --fg:#e5e7eb; --muted:#9ca3af; --bg:#0b0b0f; --border:#2d2f36; }
+    }
+    html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Noto Sans; }
+    .container { max-width: 960px; margin: 0 auto; padding: 24px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .pill { display:inline-block; padding:6px 12px; border:1px solid var(--border); border-radius:9999px; background:transparent; color:var(--fg); text-decoration:none; font-weight:700; }
+    .btn { border:1px solid var(--fg); background:var(--fg); color:var(--bg); border-radius:12px; padding:10px 14px; font-weight:800; text-decoration:none; }
+    .btn-ghost { border:1px solid var(--border); background:transparent; color:var(--fg); border-radius:12px; padding:8px 12px; text-decoration:none; }
+    .card { border:1px solid var(--border); border-radius:16px; padding:16px; background:rgba(0,0,0,0.02); }
+    .muted { color:var(--muted); }
+    .footer { border-top:1px solid var(--border); margin-top:40px; padding:16px 0; font-size:14px; color:var(--muted); }
+    h1,h2,h3 { margin: 0.2rem 0 0.8rem 0; }
+    ul,ol { line-height:1.7; }
+    a { color: inherit; }
+    code { background: rgba(0,0,0,.06); padding:2px 6px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="pill" href="/"><b>NoSugar</b></a>
+      <nav style="display:flex; gap:8px;">
+        <a class="btn-ghost" href="/privacy.html">Privacy</a>
+        <a class="btn-ghost" href="/support.html">Support</a>
+      </nav>
+    </header>
+    <main style="display:grid; gap:16px; margin-top:16px;">
+
+  <h1>Support</h1>
+  <p>Need help? We reply within 1–2 business days.</p>
+  <div class="card">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:support@nosugarapp.com">support@nosugarapp.com</a></p>
+  </div>
+  <div class="card">
+    <h2>Account &amp; data</h2>
+    <ul>
+      <li><a href="/data-deletion.html">How to export or delete your data</a></li>
+      <li>To delete your account: open the app → <b>Settings → Danger zone → Delete account</b>.</li>
+    </ul>
+  </div>
+
+    </main>
+
+<footer class="footer">
+  © 2025 nosugar •
+  <a href="/privacy.html">Privacy Policy</a> •
+  <a href="/terms.html">Terms</a> •
+  <a href="/eula.html">EULA</a> •
+  <a href="/data-deletion.html">Data &amp; Deletion</a> •
+  <a href="/support.html">Support</a>
+</footer>
+
+  </div>
+</body>
+</html>
