@@ -1,82 +1,48 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NoSugar – Data & Deletion</title>
-  <meta name="color-scheme" content="light dark" />
-  <style>
-    :root { --fg:#111827; --muted:#6b7280; --bg:#ffffff; --border:#e5e7eb; }
-    @media (prefers-color-scheme: dark) {
-      :root { --fg:#e5e7eb; --muted:#9ca3af; --bg:#0b0b0f; --border:#2d2f36; }
-    }
-    html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Noto Sans; }
-    .container { max-width: 960px; margin: 0 auto; padding: 24px; }
-    header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
-    .pill { display:inline-block; padding:6px 12px; border:1px solid var(--border); border-radius:9999px; background:transparent; color:var(--fg); text-decoration:none; font-weight:700; }
-    .btn { border:1px solid var(--fg); background:var(--fg); color:var(--bg); border-radius:12px; padding:10px 14px; font-weight:800; text-decoration:none; }
-    .btn-ghost { border:1px solid var(--border); background:transparent; color:var(--fg); border-radius:12px; padding:8px 12px; text-decoration:none; }
-    .card { border:1px solid var(--border); border-radius:16px; padding:16px; background:rgba(0,0,0,0.02); }
-    .muted { color:var(--muted); }
-    .footer { border-top:1px solid var(--border); margin-top:40px; padding:16px 0; font-size:14px; color:var(--muted); }
-    h1,h2,h3 { margin: 0.2rem 0 0.8rem 0; }
-    ul,ol { line-height:1.7; }
-    a { color: inherit; }
-    code { background: rgba(0,0,0,.06); padding:2px 6px; border-radius:6px; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <a class="pill" href="/"><b>NoSugar</b></a>
-      <nav style="display:flex; gap:8px;">
-        <a class="btn-ghost" href="/privacy.html">Privacy</a>
-        <a class="btn-ghost" href="/support.html">Support</a>
-      </nav>
-    </header>
-    <main style="display:grid; gap:16px; margin-top:16px;">
-
-  <h1>Data &amp; Deletion</h1>
-  <p class="muted">How to export your information or remove it from NoSugar.</p>
-
-  <section class="card">
-    <h2>Export your data</h2>
-    <ol>
-      <li>Open the app and go to <b>Settings</b>.</li>
-      <li>Select <b>Export</b> and follow the prompts to download your logs.</li>
-    </ol>
-  </section>
-
-  <section class="card">
-    <h2>Delete your data (keep your account)</h2>
-    <ol>
-      <li>Open the app → <b>Settings</b>.</li>
-      <li>Scroll to <b>Danger zone</b> → tap <b>Delete my data only</b>.</li>
-      <li>Your logs and personal entries will be cleared; you remain signed in.</li>
-    </ol>
-  </section>
-
-  <section class="card">
-    <h2>Delete your account (permanent)</h2>
-    <ol>
-      <li>Open the app → <b>Settings</b> → <b>Danger zone</b>.</li>
-      <li>Tap <b>Delete account</b> and type <code>DELETE</code> to confirm.</li>
-      <li>We’ll sign you out and remove your account and personal data.</li>
-    </ol>
-    <p class="muted">If you can’t access the app, email <a href="mailto:support@nosugarapp.com">support@nosugarapp.com</a> from your registered address and we’ll help.</p>
-  </section>
-
-    </main>
-
-<footer class="footer">
-  © 2025 nosugar •
-  <a href="/privacy.html">Privacy Policy</a> •
-  <a href="/terms.html">Terms</a> •
-  <a href="/eula.html">EULA</a> •
-  <a href="/data-deletion.html">Data &amp; Deletion</a> •
-  <a href="/support.html">Support</a>
-</footer>
-
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data & Deletion • nosugar</title>
+<style>
+:root{--fg:#0a0a0a;--muted:#5b5b5b;--bg:#fff;--brand:#12b886}
+*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+a{color:#12b886;text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:860px;margin:0 auto;padding:32px 20px 80px}
+header{padding:24px 0 8px;border-bottom:1px solid #eee;margin-bottom:28px;display:flex;align-items:center;gap:12px}
+header img{width:36px;height:36px}
+h1{font-size:28px;margin:6px 0 10px}h2{font-size:20px;margin:22px 0 8px}
+p,li{line-height:1.6}.muted{color:#5b5b5b;font-size:14px}
+footer{margin-top:40px;border-top:1px solid #eee;padding-top:18px}
+</style></head><body>
+<div class="wrap">
+<header>
+  <img src="logo.png" alt="nosugar logo" onerror="this.style.display='none'">
+  <div>
+    <div class="muted">nosugar</div>
+    <h1>Data &amp; Deletion</h1>
+    <div class="muted">Last updated: 2025-10-21</div>
   </div>
-</body>
-</html>
+</header>
+
+<p>This page explains how to export and delete your data.</p>
+
+<h2>Export</h2>
+<ol>
+  <li>Open the app → <em>Settings → Data &amp; Export</em>.</li>
+  <li>Select <strong>Export CSV</strong> to download your logs.</li>
+</ol>
+
+<h2>Delete Account &amp; Data</h2>
+<ol>
+  <li>Open the app → <em>Settings → Data &amp; Export → Delete account</em>.</li>
+  <li>Confirm deletion. This permanently removes your account and associated data from our systems (subject to short backups/retention for security/compliance).</li>
+</ol>
+<p>You can also email <a href="mailto:support@nosugarapp.com">support@nosugarapp.com</a> from your account email to request deletion.</p>
+
+<h2>Timing</h2>
+<p>Deletion is initiated immediately and typically completes within 30 days. You’ll lose access once deletion is processed.</p>
+
+<h2>Questions</h2>
+<p>Contact: <a href="mailto:support@nosugarapp.com">support@nosugarapp.com</a></p>
+
+<footer class="muted">© 2025 nosugar. Informational only; not legal advice.</footer>
+</div>
+</body></html>
