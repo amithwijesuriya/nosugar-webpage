@@ -1,64 +1,221 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NoSugar</title>
-  <meta name="color-scheme" content="light dark" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>nosugar — cut added sugar with one simple number</title>
+  <meta name="description" content="Track added sugar with one simple number. Set a daily limit, add foods fast, and see what to cut—without calorie chaos.">
+
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
-    :root { --fg:#111827; --muted:#6b7280; --bg:#ffffff; --border:#e5e7eb; }
-    @media (prefers-color-scheme: dark) {
-      :root { --fg:#e5e7eb; --muted:#9ca3af; --bg:#0b0b0f; --border:#2d2f36; }
+    :root{
+      --bg:#0a0f10; --card:#0f1518; --muted:#9fb3bf; --brand:#16a34a; --ring:#ff9d00;
+      --white:#fff; --glass:rgba(255,255,255,.08);
     }
-    html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Noto Sans; }
-    .container { max-width: 960px; margin: 0 auto; padding: 24px; }
-    header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
-    .pill { display:inline-block; padding:6px 12px; border:1px solid var(--border); border-radius:9999px; background:transparent; color:var(--fg); text-decoration:none; font-weight:700; }
-    .btn { border:1px solid var(--fg); background:var(--fg); color:var(--bg); border-radius:12px; padding:10px 14px; font-weight:800; text-decoration:none; }
-    .btn-ghost { border:1px solid var(--border); background:transparent; color:var(--fg); border-radius:12px; padding:8px 12px; text-decoration:none; }
-    .card { border:1px solid var(--border); border-radius:16px; padding:16px; background:rgba(0,0,0,0.02); }
-    .muted { color:var(--muted); }
-    .footer { border-top:1px solid var(--border); margin-top:40px; padding:16px 0; font-size:14px; color:var(--muted); }
-    h1,h2,h3 { margin: 0.2rem 0 0.8rem 0; }
-    ul,ol { line-height:1.7; }
-    a { color: inherit; }
-    code { background: rgba(0,0,0,.06); padding:2px 6px; border-radius:6px; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 720px at 20% 0%, #0b5, transparent 60%),
+        radial-gradient(900px 520px at 110% 16%, #0af, transparent 55%),
+        var(--bg);
+      color:var(--white);
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+
+    header{display:flex;align-items:center;gap:12px;max-width:1120px;margin:0 auto;padding:24px 20px}
+    .logo{width:40px;height:40px;border-radius:10px;object-fit:cover;background:#16a34a}
+    .title{font-weight:800;font-size:20px;letter-spacing:.2px}
+    .cta{margin-left:auto;padding:10px 16px;background:var(--brand);border:0;border-radius:10px;color:#fff;font-weight:700;cursor:pointer}
+
+    .hero{max-width:1120px;margin:10px auto 0;display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center;padding:0 20px}
+    .headline{font-size:40px;line-height:1.05;margin:0 0 16px;font-weight:800}
+    .sub{color:var(--muted);font-size:16px;margin:0 0 22px}
+
+    .phone{ justify-self:end; position:relative; width:min(420px,86vw); aspect-ratio:9/19.5;
+      border-radius:38px; padding:18px; background: radial-gradient(90px 60px at 25% -10%, rgba(255,255,255,.14), transparent 40%), #0a1215;
+      box-shadow:0 20px 60px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.12); overflow:visible;
+    }
+    .screen{ width:100%;height:100%;border-radius:26px;overflow:hidden;background:#fff;position:relative;display:flex;align-items:center;justify-content:center}
+    .screen>img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .dot{ position:absolute; width:12px;height:12px;border-radius:50%; background:var(--ring);
+          box-shadow:0 0 0 8px rgba(255,157,0,.14),0 0 0 2px rgba(0,0,0,.45) inset; z-index:3 }
+    .callout{
+      position:absolute; max-width:220px; padding:10px 12px; border-radius:10px;
+      background:rgba(15,21,24,.85); backdrop-filter:blur(6px);
+      border:1px solid var(--glass); color:#d7e9f3; z-index:2
+    }
+    .callout h4{margin:0 0 4px;font-size:13px}
+    .callout p{margin:0;font-size:12.5px;color:#c7d6de}
+    .arrow{position:absolute; width:1px;height:1px;overflow:visible;z-index:1}
+    .arrow line{stroke:#d9f0fa;stroke-width:2;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(255,255,255,.35))}
+
+    .callouts-stack{display:none}
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;gap:24px}
+      .phone{justify-self:center}
+      .dot,.callout,.arrow{display:none}
+      .callouts-stack{display:block;max-width:980px;margin:12px auto 0;padding:0 20px}
+      .stack-item{background:var(--card);border:1px solid var(--glass);border-radius:12px;padding:12px 14px;margin:10px 0}
+      .stack-item h4{margin:0 0 4px;font-size:13.5px} .stack-item p{margin:0;color:#b9c8cf;font-size:13.5px}
+    }
+
+    section{max-width:1120px;margin:56px auto;padding:0 20px}
+    h2{font-size:28px;margin:0 0 12px;font-weight:800}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px}
+    .card h3{margin:0 0 8px} .card p{margin:0;color:#b8c9cf}
+    footer{max-width:1120px;margin:32px auto 40px;padding:0 20px;color:#9fb3bf}
+    footer a{color:#d7e9f3}
+
+    canvas#mols{position:fixed;inset:0;z-index:-1;opacity:.35;filter:blur(.2px)}
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <a class="pill" href="/"><b>NoSugar</b></a>
-      <nav style="display:flex; gap:8px;">
-        <a class="btn-ghost" href="/privacy.html">Privacy</a>
-        <a class="btn-ghost" href="/support.html">Support</a>
-      </nav>
-    </header>
-    <main style="display:grid; gap:16px; margin-top:16px;">
+  <canvas id="mols"></canvas>
 
-  <h1>Track sugar. Eat smarter.</h1>
-  <p class="muted">NoSugar helps you log added sugar and build healthier habits with simple, fast tracking.</p>
-  <div class="card">
-    <h2>What you can do</h2>
-    <ul>
-      <li>Log foods &amp; drinks and see daily sugar totals</li>
-      <li>Set targets and watch your weekly trend</li>
-      <li>Export your data anytime</li>
-      <li>Delete your data or your entire account from within the app</li>
-    </ul>
+  <header>
+    <img src="logo.png" alt="nosugar logo" class="logo" onerror="this.style.display='none'"/>
+    <div class="title">nosugar</div>
+    <button class="cta" onclick="openStore()">Get the app</button>
+  </header>
+
+  <main class="hero">
+    <div>
+      <h1 class="headline">Cut added sugar with one simple number.</h1>
+      <p class="sub">Set your daily limit, log a few items, and watch the ring. When it fills, you're done. No calorie chaos, no overwhelm.</p>
+    </div>
+
+    <div class="phone" aria-label="App preview on a phone">
+      <div class="screen">
+        <img id="appUI" src="app-ui.jpg" alt="nosugar app UI"
+             onerror="if(!this.dataset.f){this.dataset.f=1;this.src='app-ui.png'}else{this.src='app-ui.webp'}">
+      </div>
+
+      <span class="dot" style="left:101%; top:8%"></span>
+      <div class="callout" style="left:108%; top:2%;">
+        <h4>Tabs keep focus</h4>
+        <p>Summary, Log, Activity, and Data — always one tap away.</p>
+      </div>
+      <svg class="arrow" style="left:100%; top:9%;"><line x1="0" y1="0" x2="-32" y2="24"/></svg>
+
+      <span class="dot" style="left:-1.5%; top:40%"></span>
+      <div class="callout" style="right:108%; top:34%;">
+        <h4>Progress ring</h4>
+        <p>The orange ring fills as you log sugar. When it hits your limit, you’re done for the day.</p>
+      </div>
+      <svg class="arrow" style="left:-2%; top:41%;"><line x1="0" y1="0" x2="36" y2="22"/></svg>
+
+      <span class="dot" style="left:101%; top:72%"></span>
+      <div class="callout" style="left:108%; top:66%;">
+        <h4>Fast add</h4>
+        <p>Type grams and tap <b>add</b>. Logging stays quick and consistent.</p>
+      </div>
+      <svg class="arrow" style="left:100%; top:73%;"><line x1="0" y1="0" x2="-34" y2="18"/></svg>
+
+      <span class="dot" style="left:-1.5%; top:82%"></span>
+      <div class="callout" style="right:108%; top:76%;">
+        <h4>Nutritionix search</h4>
+        <p>Find common foods with accurate added-sugar values.</p>
+      </div>
+      <svg class="arrow" style="left:-2%; top:83%;"><line x1="0" y1="0" x2="34" y2="18"/></svg>
+
+      <span class="dot" style="left:101%; top:94%"></span>
+      <div class="callout" style="left:108%; top:88%;">
+        <h4>Home • Log • Activity • Export</h4>
+        <p>Four buttons, zero clutter. Export your data anytime.</p>
+      </div>
+      <svg class="arrow" style="left:100%; top:95%;"><line x1="0" y1="0" x2="-30" y2="14"/></svg>
+    </div>
+  </main>
+
+  <div class="callouts-stack">
+    <div class="stack-item"><h4>Daily limit & ring</h4><p>The orange ring fills toward your daily budget. When it’s full, you’re at your limit.</p></div>
+    <div class="stack-item"><h4>Fast add</h4><p>Enter grams and tap <b>add</b>. Done in seconds.</p></div>
+    <div class="stack-item"><h4>Nutritionix search</h4><p>Search popular foods with added-sugar values.</p></div>
+    <div class="stack-item"><h4>Simple nav</h4><p>Home, Log, Activity, Export — the essentials.</p></div>
   </div>
 
-    </main>
+  <section>
+    <h2>Why a single number works</h2>
+    <p class="sub">Sugar is sneaky. nosugar reduces the day to one clear goal—grams left in your budget. Simple is doable, and doable wins.</p>
+  </section>
 
-<footer class="footer">
-  © 2025 nosugar •
-  <a href="/privacy.html">Privacy Policy</a> •
-  <a href="/terms.html">Terms</a> •
-  <a href="/eula.html">EULA</a> •
-  <a href="/data-deletion.html">Data &amp; Deletion</a> •
-  <a href="/support.html">Support</a>
-</footer>
+  <section>
+    <h2>Features</h2>
+    <div class="grid">
+      <div class="card"><h3>Smart daily limit</h3><p>Personalized starting point, easy to adjust.</p></div>
+      <div class="card"><h3>“Burn it off” activity</h3><p>Translate movement into sugar credit.</p></div>
+      <div class="card"><h3>Export & privacy</h3><p>One-tap CSV export. Data is yours. Clear deletion controls.</p></div>
+    </div>
+  </section>
 
-  </div>
+  <section>
+    <h2>How it works</h2>
+    <ol class="sub">
+      <li>Set (or accept) your daily added-sugar limit.</li>
+      <li>Log a few items. The ring fills toward the limit.</li>
+      <li>Stay under—or decide what to cut. That’s it.</li>
+    </ol>
+    <button class="cta" onclick="openStore()">Join TestFlight</button>
+  </section>
+
+  <footer>
+    © <span id="y"></span> nosugar •
+    <a href="#" onclick="show('privacy')">Privacy Policy</a> •
+    <a href="#" onclick="show('terms')">Terms</a> •
+    <a href="#" onclick="show('eula')">EULA</a> •
+    <a href="#" onclick="show('data')">Data & Deletion</a> •
+    <a href="#" onclick="show('support')">Support</a>
+  </footer>
+
+  <dialog id="privacy"><div class="modal-head"><h3>Privacy Policy</h3><button class="x" onclick="this.closest('dialog').close()">✕</button></div><div class="modal-body"><p>We collect the minimum needed to run the app (account & basic usage). Your logs live in your account and are exportable anytime. We never sell personal data. Delete from Settings → Data & Export, or contact Support.</p></div></dialog>
+  <dialog id="terms"><div class="modal-head"><h3>Terms of Service</h3><button class="x" onclick="this.closest('dialog').close()">✕</button></div><div class="modal-body"><p>Use nosugar for personal, non-medical purposes. Nosugar does not diagnose or treat conditions.</p></div></dialog>
+  <dialog id="eula"><div class="modal-head"><h3>End-User License Agreement</h3><button class="x" onclick="this.closest('dialog').close()">✕</button></div><div class="modal-body"><p>Licensed, not sold. Install on your personal devices. No reverse engineering or redistribution.</p></div></dialog>
+  <dialog id="data"><div class="modal-head"><h3>Data & Deletion</h3><button class="x" onclick="this.closest('dialog').close()">✕</button></div><div class="modal-body"><p>Export CSV anytime. To delete your account/data, use Settings → Data & Export → Delete, or email Support. Deletions propagate across backups within 30 days.</p></div></dialog>
+  <dialog id="support"><div class="modal-head"><h3>Support</h3><button class="x" onclick="this.closest('dialog').close()">✕</button></div><div class="modal-body"><p>Email: support@nosugarapp.com</p><p>We reply within 1–2 business days.</p></div></dialog>
+
+  <style>
+    dialog{border:none;border-radius:12px;max-width:760px;width:min(92vw,760px);padding:0;background:#0f1518;color:#e8f1f5}
+    .modal-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .modal-head h3{margin:0;font-size:18px}
+    .modal-body{padding:14px 18px;color:#c8d7de;line-height:1.55}
+    .x{margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:8px;color:#cfe6ee;padding:6px 10px;cursor:pointer}
+  </style>
+
+  <script>
+    const TESTFLIGHT = "https://testflight.apple.com/join/ySZHTZT7";
+    function openStore(){ location.href = TESTFLIGHT; }
+    function show(id){ document.getElementById(id).showModal(); }
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    const c = document.getElementById('mols'), ctx = c.getContext('2d');
+    let W,H,parts=[];
+    function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; seed(); }
+    addEventListener('resize', resize); resize();
+    function seed(){ parts = Array.from({length: Math.min(120, Math.floor(W*H/16000))}, () => ({
+      x: Math.random()*W, y: Math.random()*H, r: 1+Math.random()*2.2, a: Math.random()*6.283, s: .3 + Math.random()*1.2
+    })); }
+    (function loop(){
+      ctx.clearRect(0,0,W,H); ctx.globalCompositeOperation='lighter';
+      for(const p of parts){
+        p.a += 0.002*p.s; p.x += Math.cos(p.a)*p.s; p.y += Math.sin(p.a)*p.s;
+        if(p.x<-10) p.x=W+10; if(p.x>W+10) p.x=-10; if(p.y<-10) p.y=H+10; if(p.y>H+10) p.y=-10;
+        const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*6);
+        g.addColorStop(0,'rgba(255,255,255,.35)'); g.addColorStop(1,'rgba(255,255,255,0)');
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*6,0,6.283); ctx.fill();
+      }
+      requestAnimationFrame(loop);
+    })();
+  </script>
 </body>
 </html>
