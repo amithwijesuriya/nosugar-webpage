@@ -4,73 +4,63 @@
 <title>Privacy Policy • nosugar</title>
 <style>
 :root{--fg:#0a0a0a;--muted:#5b5b5b;--bg:#fff;--brand:#12b886}
-*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--fg)}
-a{color:var(--brand);text-decoration:none}a:hover{text-decoration:underline}
+*{box-sizing:border-box}
+html,body{
+  margin:0; padding:0;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:var(--bg); color:var(--fg)
+}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
 .wrap{max-width:860px;margin:0 auto;padding:32px 20px 80px}
 header{padding:24px 0 8px;border-bottom:1px solid #eee;margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.home-link{display:flex;align-items:flex-start;gap:12px;text-decoration:none;color:inherit;}
 header img{width:36px;height:36px}
-h1{font-size:28px;margin:6px 0 10px}h2{font-size:20px;margin:22px 0 8px}
-p,li{line-height:1.6}.muted{color:var(--muted);font-size:14px}
-.callout{background:#f6fffb;border:1px solid #e3fff3;padding:12px 14px;border-radius:12px;margin:14px 0}
+h1{font-size:28px;margin:6px 0 10px}
+h2{font-size:20px;margin:22px 0 8px}
+p,li{line-height:1.6}
+.muted{color:var(--muted);font-size:14px}
 footer{margin-top:40px;border-top:1px solid #eee;padding-top:18px}
-</style>
-</head><body>
+</style></head><body>
 <div class="wrap">
 <header>
-  <img src="logo.png" alt="nosugar logo" onerror="this.style.display='none'">
-  <div>
-    <div class="muted">nosugar</div>
-    <h1>Privacy Policy</h1>
-    <div class="muted">Last updated: 2025-10-21</div>
-  </div>
+  <a href="/" class="home-link">
+    <img src="logo.png" alt="nosugar logo" onerror="this.style.display='none'">
+    <div>
+      <div class="muted">nosugar</div>
+      <h1>Privacy Policy</h1>
+      <div class="muted">Last updated: 2025-10-21</div>
+    </div>
+  </a>
 </header>
 
+
 <p>Welcome to nosugar. We respect your privacy. This Privacy Policy explains what data we collect, how we use it, and the choices you have.</p>
-
-<div class="callout"><strong>Summary:</strong> We collect account details (email and optional name), optional profile info (height, weight, units), and app logs you enter (added-sugar entries and activities). We use Supabase to store and process this data securely. We don’t sell your data.</div>
-
 <h2>Information We Collect</h2>
 <ul>
-  <li><strong>Account Data:</strong> Email address and password hash (via Supabase Auth); optional display name.</li>
+  <li><strong>Account Data:</strong> Email and password hash (via Supabase Auth); optional display name.</li>
   <li><strong>Profile Data (optional):</strong> Height, weight, sex, unit preferences.</li>
-  <li><strong>Log Data:</strong> Entries you add (e.g., items and grams of added sugar), activity entries.</li>
-  <li><strong>Device/Technical:</strong> IP address, device/browser info, and minimal analytics for reliability/performance.</li>
+  <li><strong>Log Data:</strong> Entries you add (grams of added sugar), activity entries.</li>
+  <li><strong>Technical:</strong> IP, device/browser info, and minimal analytics for reliability/performance.</li>
 </ul>
-
 <h2>How We Use Data</h2>
 <ul>
   <li>Provide and personalize the app (daily limit estimates, progress visuals).</li>
-  <li>Sync across your signed-in devices (Supabase).</li>
+  <li>Sync across devices (Supabase).</li>
   <li>Improve features, troubleshoot, and protect against abuse.</li>
   <li>Send important updates and security notices.</li>
 </ul>
-
-<h2>Legal Bases (EEA/UK)</h2>
-<p>Performance of contract (provide the service), consent (optional features), and legitimate interests (security and reliability). You can withdraw consent any time in-app or by contacting us.</p>
-
 <h2>Sharing</h2>
-<p>We don’t sell personal information. We share data with service providers (e.g., Supabase) under data-processing agreements, or when required by law.</p>
-
+<p>We don’t sell personal data. We share with service providers (e.g., Supabase) under data-processing agreements, or when required by law.</p>
 <h2>Retention</h2>
-<p>We keep data while your account is active. You can delete your account in <em>Settings → Data &amp; Export → Delete account</em>. Minimal records may be retained as required by law.</p>
-
+<p>We keep data while your account is active. You can delete your account in <em>Settings → Account → Delete account</em>. Minimal records may be retained as required by law.</p>
 <h2>Your Rights</h2>
 <ul>
   <li>Access, correction, portability, and deletion.</li>
-  <li>Object or restrict certain processing.</li>
-  <li>California (CCPA): right to know/delete and opt-out of sale/share (we do not sell).</li>
+  <li>Object or restrict processing in some cases.</li>
 </ul>
 <p>Contact: <a href="mailto:support@nosugarapp.com">support@nosugarapp.com</a></p>
 
-<h2>Children</h2>
-<p>nosugar isn’t intended for children under 13 (or higher local minimum). We don’t knowingly collect children’s data.</p>
 
-<h2>Security</h2>
-<p>We use industry-standard measures and Supabase security. No method is 100% secure.</p>
-
-<h2>Changes</h2>
-<p>We may update this policy. We’ll post updates here with a new “Last updated” date.</p>
-
-<footer class="muted">© 2025 nosugar. This page is provided for informational purposes and does not constitute legal advice.</footer>
-</div>
-</body></html>
+<footer class="muted">© 2025 nosugar.</footer>
+</div></body></html>
