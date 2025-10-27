@@ -5,63 +5,243 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>nosugar — cut added sugar with one simple number</title>
   <meta name="description" content="Track added sugar with one simple number. Set a daily limit, add foods fast, and watch the ring. When it fills, you're done for the day.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --text-main:#0a0a0a;
       --text-muted:#5b5b5b;
       --accent:#12b886;
       --ring:#ff9d00;
+
       --card-bg:#ffffff;
       --card-border:#d9efe4;
+
       --modal-bg:#ffffff;
       --modal-border:#d9efe4;
       --modal-text:#0a0a0a;
       --modal-muted:#5b5b5b;
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{ margin:0; background:#ffffff; color:var(--text-main); font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;}
-    header{ display:flex; align-items:center; gap:12px; max-width:1120px; margin:0 auto; padding:24px 20px; }
-    .brand-link{ display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text-main); font-weight:800; font-size:18px; line-height:1; }
-    .logo{ width:40px; height:40px; border-radius:10px; object-fit:cover; }
-    nav{ margin-left:auto; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
-    .cta{ padding:10px 16px; background:var(--accent); border:0; border-radius:10px; color:#fff; font-weight:700; cursor:pointer; font-size:14px; }
-    .hero{ max-width:1120px; margin:10px auto 0; display:grid; grid-template-columns:1.05fr .95fr; gap:26px; align-items:center; padding:0 20px; }
-    .headline{ font-size:40px; line-height:1.05; margin:0 0 16px; font-weight:800; color:var(--text-main); }
-    .sub{ color:var(--text-muted); font-size:16px; margin:0 0 22px; line-height:1.5; }
-    .phone{ justify-self:end; position:relative; width:min(420px,86vw); aspect-ratio:9/19.5; border-radius:38px; padding:18px; background:#0a1215;
-            box-shadow:0 20px 60px rgba(0,0,0,.25), inset 0 0 0 1px rgba(255,255,255,.12); border:1px solid rgba(0,0,0,.6); color:#fff; }
-    .screen{ width:100%; height:100%; border-radius:26px; overflow:hidden; background:#fff; position:relative; display:flex; align-items:center; justify-content:center }
-    .screen>img{ width:100%; height:100%; object-fit:cover; display:block }
-    .chip{ position:absolute; background:rgba(0,0,0,.55); color:#fff; border-radius:8px; border:1px solid rgba(255,255,255,.18);
-           font-size:11px; line-height:1.4; padding:6px 8px 7px; max-width:140px; font-weight:600; backdrop-filter:blur(4px); }
-    .chip b{ display:block; font-size:11.5px; font-weight:600; color:#fff; margin-bottom:2px; line-height:1.3; }
-    section{ max-width:1120px; margin:56px auto; padding:0 20px; }
-    h2{ font-size:28px; margin:0 0 12px; font-weight:800; color:var(--text-main); }
-    .howto-steps{ color:var(--text-muted); font-size:16px; line-height:1.55; padding-left:20px; }
-    .howto-steps li{ margin-bottom:12px; }
-    .howto-steps b{ color:var(--text-main); }
-    footer{ max-width:1120px; margin:32px auto 40px; padding:0 20px; color:var(--text-muted); font-size:14px; line-height:1.5; }
-    footer a{ color:var(--text-main); text-decoration:none; font-weight:500; }
-    footer a:hover{ text-decoration:underline; }
-    canvas#mols{ position:fixed; inset:0; z-index:-1; opacity:.18; pointer-events:none; }
-    dialog{ border:none; border-radius:12px; max-width:760px; width:min(92vw,760px); padding:0; background:var(--modal-bg); color:var(--modal-text); border:1px solid var(--modal-border); }
-    .modal-head{ display:flex; align-items:center; gap:10px; padding:14px 18px; border-bottom:1px solid var(--modal-border); }
-    .modal-head h3{ margin:0; font-size:18px; color:var(--modal-text); }
-    .modal-body{ padding:14px 18px; color:var(--modal-muted); line-height:1.55; font-size:15px; }
-    .x{ margin-left:auto; background:transparent; border:1px solid var(--modal-border); border-radius:8px; color:var(--modal-text); padding:6px 10px; cursor:pointer; font-size:14px; }
+
+    body{
+      margin:0;
+      background:#ffffff;
+      color:var(--text-main);
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      max-width:1120px;
+      margin:0 auto;
+      padding:24px 20px;
+    }
+    .brand-link{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color:var(--text-main);
+      font-weight:800;
+      font-size:18px;
+      line-height:1;
+    }
+    .logo{
+      width:40px;
+      height:40px;
+      border-radius:10px;
+      object-fit:cover;
+    }
+    nav{
+      margin-left:auto;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .cta{
+      padding:10px 16px;
+      background:var(--accent);
+      border:0;
+      border-radius:10px;
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+      font-size:14px;
+    }
+
+    .hero{
+      max-width:1120px;
+      margin:10px auto 0;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:26px;
+      align-items:center;
+      padding:0 20px;
+    }
+
+    .headline{
+      font-size:40px;
+      line-height:1.05;
+      margin:0 0 16px;
+      font-weight:800;
+      color:var(--text-main);
+    }
+    .sub{
+      color:var(--text-muted);
+      font-size:16px;
+      margin:0 0 22px;
+      line-height:1.5;
+    }
+
+    /* phone mock block */
+    .phone{
+      justify-self:end;
+      position:relative;
+      width:min(420px,86vw);
+      aspect-ratio:9/19.5;
+      border-radius:38px;
+      padding:18px;
+      background:#0a1215;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.25),
+        inset 0 0 0 1px rgba(255,255,255,.12);
+      border:1px solid rgba(0,0,0,.6);
+      color:#fff;
+    }
+    .screen{
+      width:100%;
+      height:100%;
+      border-radius:26px;
+      overflow:hidden;
+      background:#fff;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center
+    }
+    .screen>img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block
+    }
+
+    /* sections */
+    section{
+      max-width:1120px;
+      margin:56px auto;
+      padding:0 20px;
+    }
+    h2{
+      font-size:28px;
+      margin:0 0 12px;
+      font-weight:800;
+      color:var(--text-main);
+    }
+    .howto-steps{
+      color:var(--text-muted);
+      font-size:16px;
+      line-height:1.55;
+      padding-left:20px;
+    }
+    .howto-steps li{
+      margin-bottom:12px;
+    }
+    .howto-steps b{
+      color:var(--text-main);
+    }
+
+    footer{
+      max-width:1120px;
+      margin:32px auto 40px;
+      padding:0 20px;
+      color:var(--text-muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+    footer a{
+      color:var(--text-main);
+      text-decoration:none;
+      font-weight:500;
+    }
+    footer a:hover{
+      text-decoration:underline;
+    }
+
+    /* sugar molecule canvas */
+    canvas#mols{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      opacity:.18;
+      pointer-events:none;
+    }
+
+    dialog{
+      border:none;
+      border-radius:12px;
+      max-width:760px;
+      width:min(92vw,760px);
+      padding:0;
+      background:var(--modal-bg);
+      color:var(--modal-text);
+      border:1px solid var(--modal-border);
+    }
+    .modal-head{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:14px 18px;
+      border-bottom:1px solid var(--modal-border);
+    }
+    .modal-head h3{
+      margin:0;
+      font-size:18px;
+      color:var(--modal-text);
+    }
+    .modal-body{
+      padding:14px 18px;
+      color:var(--modal-muted);
+      line-height:1.55;
+      font-size:15px;
+    }
+    .x{
+      margin-left:auto;
+      background:transparent;
+      border:1px solid var(--modal-border);
+      border-radius:8px;
+      color:var(--modal-text);
+      padding:6px 10px;
+      cursor:pointer;
+      font-size:14px;
+    }
+
     @media (max-width:980px){
-      .hero{ grid-template-columns:1fr; gap:24px; }
-      .phone{ justify-self:center; }
-      .chip{ display:none; }
+      .hero{
+        grid-template-columns:1fr;
+        gap:24px;
+      }
+      .phone{
+        justify-self:center;
+      }
     }
   </style>
 </head>
 <body>
   <canvas id="mols"></canvas>
+
   <header>
     <a class="brand-link" href="/">
       <img src="logo.png" alt="nosugar logo" class="logo" onerror="this.style.display='none'"/>
@@ -86,32 +266,27 @@
       <div class="screen">
         <img id="appUI" src="app-ui.png" alt="nosugar app UI">
       </div>
-      <div class="chip" style="left:-2%; top:34%;"><b>Progress ring</b>shows how close you are</div>
-      <div class="chip" style="right:-2%; top:5%;"><b>Tabs</b>home • log • activity</div>
-      <div class="chip" style="right:-2%; top:62%;"><b>Sugar lookup</b>find hidden sugar fast</div>
-      <div class="chip" style="left:-2%; bottom:6%;"><b>Quick add</b>type grams + add</div>
+      <!-- no info chips -->
     </div>
   </main>
 
   <section>
-    <h2>Getting started (your first day)</h2>
+    <h2>Getting started</h2>
     <ol class="howto-steps">
       <li><b>Create your profile.</b> We give you a starting daily added-sugar budget based on a few basics. You can change it any time.</li>
-      <li><b>Log what actually has added sugar.</b> Soda, candy, sauces, cereal, sweet coffee, etc. Just enter grams or search the food and tap <b>add</b>.</li>
-      <li><b>Watch the ring.</b> The ring fills toward your daily limit. When it’s full, you’re “at your limit” for the day. That’s your stop signal.</li>
-      <li><b>Check Activity.</b> Movement translates into “sugar credit.” Go for a walk, get a few grams back.</li>
-      <li><b>Look for patterns after ~4–6 weeks.</b> You’ll start to see where most of your sugar is sneaking in — the repeat habits that matter.</li>
-    </ol>
-  </section>
 
-  <section>
-    <h2>How it works</h2>
-    <ol class="howto-steps">
-      <li><b>Set (or accept) your daily limit.</b></li>
-      <li><b>Log a few items.</b> The ring fills toward that limit.</li>
-      <li><b>Decide what to cut.</b> That’s literally it.</li>
+      <li><b>Log what actually has added sugar.</b> Soda, candy, sauces, cereal, sweet coffee, etc. Just type the grams/oz of added sugar or search the food and tap <b>add</b>.</li>
+
+      <li><b>Watch the ring.</b> The ring fills toward your daily limit. When it’s full, you’re “at your limit” for the day. That’s your stop signal.</li>
+
+      <li><b>Check Activity.</b> Movement translates into “sugar credit.” Go for a walk, get a few grams back.</li>
+
+      <li><b>Look for patterns after ~4–6 weeks.</b> You’ll start to see where most of your sugar is sneaking in — the repeat habits that matter.</li>
+
+      <li><b>Review your data.</b> Every week, nosugar shows your total added sugar and highlights your highest and lowest days so you can spot problem spikes.</li>
+
+      <li><b>Export your data.</b> Export your entries weekly or monthly to see long-term sugar habits and how they’re trending.</li>
     </ol>
-    <button class="cta" onclick="openStore()">Get the app</button>
   </section>
 
   <footer class="footer">
@@ -137,16 +312,32 @@
   <script>
     const TESTFLIGHT = "https://testflight.apple.com/join/ySZHTZT7";
     function openStore(){ location.href = TESTFLIGHT; }
+
+    // sugar molecule float animation (green glows)
     const c = document.getElementById('mols'), ctx = c.getContext('2d');
     let W,H,parts=[];
-    function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; seed(); }
-    addEventListener('resize', resize); resize();
-    function seed(){
-      parts = Array.from({length: Math.min(120, Math.floor(W*H/16000))}, () => ({
-        x: Math.random()*W, y: Math.random()*H, r: 1+Math.random()*2.2,
-        a: Math.random()*6.283, s: .3 + Math.random()*1.2
-      }));
+
+    function resize(){
+      W = c.width = innerWidth;
+      H = c.height = innerHeight;
+      seed();
     }
+    addEventListener('resize', resize);
+    resize();
+
+    function seed(){
+      parts = Array.from(
+        {length: Math.min(120, Math.floor(W*H/16000))},
+        () => ({
+          x: Math.random()*W,
+          y: Math.random()*H,
+          r: 1+Math.random()*2.2,
+          a: Math.random()*6.283,
+          s: .3 + Math.random()*1.2
+        })
+      );
+    }
+
     (function loop(){
       ctx.clearRect(0,0,W,H);
       ctx.globalCompositeOperation='lighter';
@@ -154,15 +345,23 @@
         p.a += 0.002*p.s;
         p.x += Math.cos(p.a)*p.s;
         p.y += Math.sin(p.a)*p.s;
-        if(p.x<-10) p.x=W+10; if(p.x>W+10) p.x=-10;
-        if(p.y<-10) p.y=H+10; if(p.y>H+10) p.y=-10;
+
+        if(p.x<-10) p.x=W+10;
+        if(p.x>W+10) p.x=-10;
+        if(p.y<-10) p.y=H+10;
+        if(p.y>H+10) p.y=-10;
+
         const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*6);
         g.addColorStop(0,'rgba(18,184,134,.25)');
         g.addColorStop(1,'rgba(18,184,134,0)');
-        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*6,0,6.283); ctx.fill();
+        ctx.fillStyle=g;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r*6,0,6.283);
+        ctx.fill();
       }
       requestAnimationFrame(loop);
     })();
   </script>
+
 </body>
 </html>
