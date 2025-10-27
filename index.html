@@ -184,7 +184,7 @@
     /* support line sits above legal footer */
     .support-line{
       max-width:1120px;
-      margin:8px auto 0;
+      margin:8px auto 24px; /* add bottom gap before footer */
       padding:0 20px;
       color:var(--text-main);
       font-weight:600;
@@ -350,12 +350,7 @@
     const TESTFLIGHT = "https://testflight.apple.com/join/ySZHTZT7";
     function openStore(){ location.href = TESTFLIGHT; }
 
-    // animated sugar / molecule network background
-    // - glowing green nodes
-    // - fine green connecting lines
-    // - gentle drift
-    // This is our custom version of the "molecule cluster" vibe.
-
+    // molecule background with fewer, slower nodes
     const canvas = document.getElementById('mols');
     const ctx = canvas.getContext('2d');
 
@@ -371,20 +366,21 @@
     resetSize();
 
     function seedNodes() {
-      const count = Math.min(140, Math.floor(W * H / 15000));
+      // fewer nodes: spread out
+      const count = Math.min(70, Math.floor(W * H / 30000));
       nodes = Array.from({length: count}, () => ({
         x: Math.random()*W,
         y: Math.random()*H,
-        r: 2 + Math.random()*2.5,     // node size
-        a: Math.random()*Math.PI*2,   // drift angle
-        s: 0.2 + Math.random()*0.8    // drift speed
+        r: 2 + Math.random()*2.5,      // node size
+        a: Math.random()*Math.PI*2,    // drift angle
+        s: 0.15 + Math.random()*0.35   // much slower drift
       }));
     }
 
     function tick() {
       ctx.clearRect(0,0,W,H);
 
-      // faint connection lines
+      // faint, shorter-range connection lines
       ctx.globalCompositeOperation = 'lighter';
       for (let i=0; i<nodes.length; i++){
         for (let j=i+1; j<nodes.length; j++){
@@ -394,9 +390,9 @@
           const dy = p.y - q.y;
           const dist = Math.sqrt(dx*dx + dy*dy);
 
-          if (dist < 130){
-            const alpha = 1 - (dist / 130);
-            ctx.strokeStyle = `rgba(18,184,134,${0.18*alpha})`;
+          if (dist < 90){
+            const alpha = 1 - (dist / 90);
+            ctx.strokeStyle = `rgba(18,184,134,${0.12*alpha})`; // lighter lines
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
@@ -408,12 +404,12 @@
 
       // glowing nodes
       for (const n of nodes){
-        // drift
-        n.a += 0.0015 * n.s;
+        // gentle drift
+        n.a += 0.001 * n.s;
         n.x += Math.cos(n.a) * n.s;
         n.y += Math.sin(n.a) * n.s;
 
-        // wrap edges so motion is continuous
+        // wrap edges
         if (n.x < -20) n.x = W+20;
         if (n.x > W+20) n.x = -20;
         if (n.y < -20) n.y = H+20;
@@ -421,7 +417,7 @@
 
         // outer glow
         const grad = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*6);
-        grad.addColorStop(0,'rgba(18,184,134,.35)');
+        grad.addColorStop(0,'rgba(18,184,134,.28)');
         grad.addColorStop(1,'rgba(18,184,134,0)');
         ctx.fillStyle = grad;
         ctx.beginPath();
@@ -429,7 +425,7 @@
         ctx.fill();
 
         // solid core
-        ctx.fillStyle = 'rgba(18,184,134,.8)';
+        ctx.fillStyle = 'rgba(18,184,134,.7)';
         ctx.beginPath();
         ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
         ctx.fill();
