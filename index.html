@@ -13,8 +13,11 @@
   <style>
     :root{
       --text-main:#0a0a0a;
-      --text-muted:#4b4b4b;
+      --text-muted:#5b5b5b;
       --accent:#12b886;
+
+      --card-bg:#ffffff;
+      --card-border:#d9efe4;
 
       --modal-bg:#ffffff;
       --modal-border:#d9efe4;
@@ -27,24 +30,12 @@
 
     body{
       margin:0;
+      background:#ffffff; /* solid white background */
       color:var(--text-main);
       font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       -webkit-font-smoothing:antialiased;
       overflow-x:hidden;
       position:relative;
-
-      background:
-        radial-gradient(900px 600px at 10% 0%, rgba(18,184,134,.12) 0%, rgba(255,255,255,0) 60%),
-        radial-gradient(900px 600px at 90% 100%, rgba(18,184,134,.10) 0%, rgba(255,255,255,0) 60%),
-        #ffffff;
-    }
-
-    /* animated sugar network canvas lives under content */
-    canvas#mols{
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
     }
 
     header{
@@ -54,8 +45,6 @@
       max-width:1120px;
       margin:0 auto;
       padding:24px 20px;
-      position:relative;
-      z-index:1;
     }
     .brand-link{
       display:flex;
@@ -89,7 +78,6 @@
       font-weight:700;
       cursor:pointer;
       font-size:14px;
-      box-shadow:0 6px 16px rgba(18,184,134,.25);
     }
 
     .hero{
@@ -100,8 +88,6 @@
       gap:26px;
       align-items:center;
       padding:0 20px;
-      position:relative;
-      z-index:1;
     }
 
     .headline{
@@ -110,16 +96,15 @@
       margin:0 0 16px;
       font-weight:800;
       color:var(--text-main);
-      text-shadow:0 1px 0 rgba(255,255,255,.8);
     }
     .sub{
       color:var(--text-muted);
       font-size:16px;
       margin:0 0 22px;
       line-height:1.5;
-      text-shadow:0 1px 0 rgba(255,255,255,.6);
     }
 
+    /* phone mock block */
     .phone{
       justify-self:end;
       position:relative;
@@ -152,64 +137,38 @@
       display:block
     }
 
+    /* sections */
     section{
       max-width:1120px;
       margin:56px auto;
       padding:0 20px;
-      position:relative;
-      z-index:1;
     }
     h2{
       font-size:28px;
       margin:0 0 12px;
       font-weight:800;
       color:var(--text-main);
-      text-shadow:0 1px 0 rgba(255,255,255,.8);
     }
     .howto-steps{
       color:var(--text-muted);
       font-size:16px;
       line-height:1.55;
       padding-left:20px;
-      text-shadow:0 1px 0 rgba(255,255,255,.5);
     }
     .howto-steps li{
       margin-bottom:12px;
     }
     .howto-steps b{
       color:var(--text-main);
-      text-shadow:none;
-    }
-
-    /* support line sits above legal footer */
-    .support-line{
-      max-width:1120px;
-      margin:8px auto 0;
-      padding:0 20px;
-      color:var(--text-main);
-      font-weight:600;
-      position:relative;
-      z-index:1;
-      text-shadow:0 1px 0 rgba(255,255,255,.8);
-    }
-    .support-line a{
-      color:var(--accent);
-      text-decoration:none;
-    }
-    .support-line a:hover{
-      text-decoration:underline;
     }
 
     footer{
       max-width:1120px;
-      margin:8px auto 40px;
+      margin:32px auto 40px;
       padding:0 20px;
       color:var(--text-muted);
       font-size:14px;
       line-height:1.5;
-      text-shadow:0 1px 0 rgba(255,255,255,.6);
-      position:relative;
-      z-index:1;
     }
     footer a{
       color:var(--text-main);
@@ -218,6 +177,28 @@
     }
     footer a:hover{
       text-decoration:underline;
+    }
+    .support-line{
+      margin-top:12px;
+      color:var(--text-main);
+      font-weight:500;
+    }
+    .support-line a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+    }
+    .support-line a:hover{
+      text-decoration:underline;
+    }
+
+    /* sugar canvas */
+    canvas#mols{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      opacity:.22; /* slightly stronger so lines are visible */
+      pointer-events:none;
     }
 
     dialog{
@@ -271,8 +252,6 @@
   </style>
 </head>
 <body>
-
-  <!-- animated sugar network canvas -->
   <canvas id="mols"></canvas>
 
   <header>
@@ -321,11 +300,6 @@
     </ol>
   </section>
 
-  <!-- Support line above footer -->
-  <div class="support-line">
-    Support: <a href="mailto:support@nosugarapp.com">support@nosugarapp.com</a>
-  </div>
-
   <footer class="footer">
     © 2025 nosugar •
     <a href="/privacy.html">Privacy Policy</a> •
@@ -333,6 +307,10 @@
     <a href="/eula.html">EULA</a> •
     <a href="/data-deletion.html">Data &amp; Deletion</a> •
     <a href="/support.html">Support</a>
+
+    <div class="support-line">
+      Support: <a href="mailto:support@nosugarapp.com">support@nosugarapp.com</a>
+    </div>
   </footer>
 
   <dialog id="privacy">
@@ -350,52 +328,48 @@
     const TESTFLIGHT = "https://testflight.apple.com/join/ySZHTZT7";
     function openStore(){ location.href = TESTFLIGHT; }
 
-    // animated sugar / molecule network background
-    // - glowing green nodes
-    // - fine green connecting lines
-    // - gentle drift
-    // This is our custom version of the "molecule cluster" vibe.
+    // sugar network animation:
+    // - softly glowing "sugar molecules"
+    // - faint green connection lines between nearby molecules (like a little sugar lattice)
 
-    const canvas = document.getElementById('mols');
-    const ctx = canvas.getContext('2d');
+    const c = document.getElementById('mols'), ctx = c.getContext('2d');
+    let W,H,parts=[];
 
-    let W, H, nodes = [];
-
-    function resetSize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-      seedNodes();
+    function resize(){
+      W = c.width = window.innerWidth;
+      H = c.height = window.innerHeight;
+      seed();
     }
+    window.addEventListener('resize', resize);
+    resize();
 
-    window.addEventListener('resize', resetSize);
-    resetSize();
-
-    function seedNodes() {
+    function seed(){
+      // number of particles scales with viewport area
       const count = Math.min(140, Math.floor(W * H / 15000));
-      nodes = Array.from({length: count}, () => ({
+      parts = Array.from({length: count}, () => ({
         x: Math.random()*W,
         y: Math.random()*H,
-        r: 2 + Math.random()*2.5,     // node size
-        a: Math.random()*Math.PI*2,   // drift angle
-        s: 0.2 + Math.random()*0.8    // drift speed
+        r: 1 + Math.random()*2.2,  // base radius for glow
+        a: Math.random()*Math.PI*2, // angle for drift
+        s: 0.3 + Math.random()*1.2  // speed factor
       }));
     }
 
-    function tick() {
+    function draw(){
       ctx.clearRect(0,0,W,H);
 
-      // faint connection lines
+      // draw faint connecting lines first
       ctx.globalCompositeOperation = 'lighter';
-      for (let i=0; i<nodes.length; i++){
-        for (let j=i+1; j<nodes.length; j++){
-          const p = nodes[i];
-          const q = nodes[j];
+      for (let i=0; i<parts.length; i++){
+        for (let j=i+1; j<parts.length; j++){
+          const p = parts[i];
+          const q = parts[j];
           const dx = p.x - q.x;
           const dy = p.y - q.y;
           const dist = Math.sqrt(dx*dx + dy*dy);
 
-          if (dist < 130){
-            const alpha = 1 - (dist / 130);
+          if (dist < 110){
+            const alpha = 1 - (dist / 110);
             ctx.strokeStyle = `rgba(18,184,134,${0.18*alpha})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -406,39 +380,32 @@
         }
       }
 
-      // glowing nodes
-      for (const n of nodes){
-        // drift
-        n.a += 0.0015 * n.s;
-        n.x += Math.cos(n.a) * n.s;
-        n.y += Math.sin(n.a) * n.s;
+      // draw glowy dots ("sugar molecules")
+      for (const p of parts){
+        // update drift
+        p.a += 0.002 * p.s;
+        p.x += Math.cos(p.a) * p.s;
+        p.y += Math.sin(p.a) * p.s;
 
-        // wrap edges so motion is continuous
-        if (n.x < -20) n.x = W+20;
-        if (n.x > W+20) n.x = -20;
-        if (n.y < -20) n.y = H+20;
-        if (n.y > H+20) n.y = -20;
+        // wrap edges
+        if (p.x < -10) p.x = W+10;
+        if (p.x > W+10) p.x = -10;
+        if (p.y < -10) p.y = H+10;
+        if (p.y > H+10) p.y = -10;
 
-        // outer glow
-        const grad = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*6);
-        grad.addColorStop(0,'rgba(18,184,134,.35)');
-        grad.addColorStop(1,'rgba(18,184,134,0)');
-        ctx.fillStyle = grad;
+        const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*6);
+        g.addColorStop(0,'rgba(18,184,134,.28)');
+        g.addColorStop(1,'rgba(18,184,134,0)');
+        ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(n.x,n.y,n.r*6,0,Math.PI*2);
-        ctx.fill();
-
-        // solid core
-        ctx.fillStyle = 'rgba(18,184,134,.8)';
-        ctx.beginPath();
-        ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+        ctx.arc(p.x,p.y,p.r*6,0,Math.PI*2);
         ctx.fill();
       }
 
-      requestAnimationFrame(tick);
+      requestAnimationFrame(draw);
     }
 
-    tick();
+    draw();
   </script>
 
 </body>
