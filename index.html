@@ -90,6 +90,14 @@
       cursor:pointer;
       font-size:14px;
       box-shadow:0 6px 16px rgba(18,184,134,.25);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .apple-icon{
+      font-weight:800;
+      line-height:1;
+      transform:translateY(-.5px);
     }
 
     .hero{
@@ -293,7 +301,7 @@
       <span>nosugar</span>
     </a>
     <nav>
-      <button class="cta" onclick="openStore()">Get the app</button>
+      <button class="cta" onclick="openStore()"><span class="apple-icon"></span> App Store</button>
     </nav>
   </header>
 
@@ -304,7 +312,7 @@
         nosugar gives you a daily added-sugar budget, shows how fast you're burning through it,
         and helps you stop when you're “done for the day.” No calorie math. No nutrition overwhelm.
       </p>
-      <button class="cta" onclick="openStore()">Join TestFlight</button>
+      <button class="cta" onclick="openStore()"><span class="apple-icon"></span> Download on the App Store</button>
     </div>
 
     <div class="phone" aria-label="App preview on a phone">
@@ -395,8 +403,30 @@
   </dialog>
 
   <script>
-    const TESTFLIGHT = "https://testflight.apple.com/join/ySZHTZT7";
-    function openStore(){ location.href = TESTFLIGHT; }
+    // Update these links with your live store URLs
+    const APPSTORE_URL = "https://apps.apple.com/us/app/nosugar/id6752961484";
+    const PLAYSTORE_URL = ""; // Android coming soon
+
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+    function isAndroid() {
+      return /Android/.test(navigator.userAgent);
+    }
+
+    function openStore(){
+      // Smart default: send mobile users to the right store.
+      if (isIOS()) return (location.href = APPSTORE_URL);
+
+      // Android not live yet
+      if (isAndroid()) {
+        alert("Android version is coming soon. For now, nosugar is available on the Apple App Store.");
+        return;
+      }
+
+      // Desktop fallback: open the iOS App Store
+      return (location.href = APPSTORE_URL);
+    }
 
     // molecule background with fewer, slower nodes
     const canvas = document.getElementById('mols');
